@@ -7,8 +7,8 @@
     <ProjectGuid>{AC3E7A22-8166-4A30-ACA6-A38255985CAB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Data</RootNamespace>
-    <AssemblyName>Data</AssemblyName>
+    <RootNamespace>JH.PriceScope.Data</RootNamespace>
+    <AssemblyName>JH.PriceScope.Data</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -50,6 +50,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLayer.cs" />
+    <Compile Include="Designation.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\Metals.cs" />
+    <Compile Include="Grade.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GradingService.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Item.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemPrice.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Metal.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mint.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="PriceScopeDb.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -65,7 +87,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PriceScopeDb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PriceSource.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purity.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Source.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StrikeCharacter.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StrikeType.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Uom.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="PriceScopeDb.edmx">
@@ -81,6 +121,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="PriceScope.sql" />
     <Content Include="PriceScopeDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>PriceScopeDb.Context.cs</LastGenOutput>

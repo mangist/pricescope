@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Data
+namespace JH.PriceScope.Data
 {
     using System;
     using System.Data.Entity;
@@ -25,5 +25,18 @@ namespace Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Designation> Designations { get; set; }
+        public virtual DbSet<Grade> Grades { get; set; }
+        public virtual DbSet<GradingService> GradingServices { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<ItemPrice> ItemPrices { get; set; }
+        public virtual DbSet<Metal> Metals { get; set; }
+        public virtual DbSet<Mint> Mints { get; set; }
+        public virtual DbSet<PriceSource> PriceSources { get; set; }
+        public virtual DbSet<Purity> Purities { get; set; }
+        public virtual DbSet<Source> Sources { get; set; }
+        public virtual DbSet<StrikeCharacter> StrikeCharacters { get; set; }
+        public virtual DbSet<StrikeType> StrikeTypes { get; set; }
+        public virtual DbSet<Uom> Uoms { get; set; }
     }
 }

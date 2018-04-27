@@ -4,20 +4,920 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PriceScopeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="PriceScopeModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="PriceScopeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Designation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="StrikeTypeId" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="Score" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GradeDesignation">
+          <Key>
+            <PropertyRef Name="GradeId" />
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Name="GradeId" Type="int" Nullable="false" />
+          <Property Name="DesignationId" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GradeStrikeCharacter">
+          <Key>
+            <PropertyRef Name="GradeId" />
+            <PropertyRef Name="StrikeCharacterId" />
+          </Key>
+          <Property Name="GradeId" Type="int" Nullable="false" />
+          <Property Name="StrikeCharacterId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GradingService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MintId" Type="int" Nullable="false" />
+          <Property Name="MetalId" Type="int" Nullable="false" />
+          <Property Name="TotalWeight" Type="smallmoney" Nullable="false" />
+          <Property Name="UomId" Type="int" Nullable="false" />
+          <Property Name="PurityId" Type="int" Nullable="false" />
+          <Property Name="ActualMetalWeightTroyOz" Type="smallmoney" Nullable="false" />
+          <Property Name="EBayCategoryId" Type="int" />
+          <Property Name="FirstYear" Type="int" />
+          <Property Name="LastYear" Type="int" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ItemPrice">
+          <Key>
+            <PropertyRef Name="PriceSourceId" />
+            <PropertyRef Name="UpdateTime" />
+          </Key>
+          <Property Name="PriceSourceId" Type="int" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="MinPrice" Type="money" Nullable="false" />
+          <Property Name="MaxPrice" Type="money" Nullable="false" />
+          <Property Name="WireCheckPrice" Type="money" Nullable="false" />
+          <Property Name="CCPaypalPrice" Type="money" Nullable="false" />
+          <Property Name="BitcoinPrice" Type="money" Nullable="false" />
+          <Property Name="ItemUrl" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Metal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PriceSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="GradeId" Type="int" Nullable="false" />
+          <Property Name="GradingServiceId" Type="int" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="ItemYearFrom" Type="int" Nullable="false" />
+          <Property Name="ItemYearTo" Type="int" Nullable="false" />
+          <Property Name="MintMark" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="WebsiteUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ElementQuery" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="eBayQuery" Type="nvarchar" MaxLength="500" />
+          <Property Name="LastChecked" Type="datetime" />
+          <Property Name="HasError" Type="bit" Nullable="false" />
+          <Property Name="LastError" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Purity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MetalId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StrikeCharacter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Census" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StrikeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Grade_StrikeType">
+          <End Role="StrikeType" Type="Self.StrikeType" Multiplicity="1" />
+          <End Role="Grade" Type="Self.Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StrikeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grade">
+              <PropertyRef Name="StrikeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradeDesignation_Designation">
+          <End Role="Designation" Type="Self.Designation" Multiplicity="1" />
+          <End Role="GradeDesignation" Type="Self.GradeDesignation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Designation">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GradeDesignation">
+              <PropertyRef Name="DesignationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradeDesignation_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="GradeDesignation" Type="Self.GradeDesignation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GradeDesignation">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradeStrikeCharacter_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="GradeStrikeCharacter" Type="Self.GradeStrikeCharacter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GradeStrikeCharacter">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GradeStrikeCharacter_StrikeCharacter">
+          <End Role="StrikeCharacter" Type="Self.StrikeCharacter" Multiplicity="1" />
+          <End Role="GradeStrikeCharacter" Type="Self.GradeStrikeCharacter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StrikeCharacter">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GradeStrikeCharacter">
+              <PropertyRef Name="StrikeCharacterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Metal">
+          <End Role="Metal" Type="Self.Metal" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="MetalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Mint">
+          <End Role="Mint" Type="Self.Mint" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="MintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Uom">
+          <End Role="Uom" Type="Self.Uom" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="UomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemPrice_PriceSource">
+          <End Role="PriceSource" Type="Self.PriceSource" Multiplicity="1" />
+          <End Role="ItemPrice" Type="Self.ItemPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PriceSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemPrice">
+              <PropertyRef Name="PriceSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_Grade">
+          <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+          <End Role="PriceSource" Type="Self.PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_GradingService">
+          <End Role="GradingService" Type="Self.GradingService" Multiplicity="0..1" />
+          <End Role="PriceSource" Type="Self.PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradingService">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="GradingServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="PriceSource" Type="Self.PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_Source">
+          <End Role="Source" Type="Self.Source" Multiplicity="1" />
+          <End Role="PriceSource" Type="Self.PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purity_Metal">
+          <End Role="Metal" Type="Self.Metal" Multiplicity="1" />
+          <End Role="Purity" Type="Self.Purity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purity">
+              <PropertyRef Name="MetalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PriceScopeModelStoreContainer">
+          <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GradeDesignation" EntityType="Self.GradeDesignation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GradeStrikeCharacter" EntityType="Self.GradeStrikeCharacter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GradingService" EntityType="Self.GradingService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemPrice" EntityType="Self.ItemPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Metal" EntityType="Self.Metal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mint" EntityType="Self.Mint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PriceSource" EntityType="Self.PriceSource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Purity" EntityType="Self.Purity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Source" EntityType="Self.Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StrikeCharacter" EntityType="Self.StrikeCharacter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StrikeType" EntityType="Self.StrikeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uom" EntityType="Self.Uom" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Grade_StrikeType" Association="Self.FK_Grade_StrikeType">
+            <End Role="StrikeType" EntitySet="StrikeType" />
+            <End Role="Grade" EntitySet="Grade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeDesignation_Designation" Association="Self.FK_GradeDesignation_Designation">
+            <End Role="Designation" EntitySet="Designation" />
+            <End Role="GradeDesignation" EntitySet="GradeDesignation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeDesignation_Grade" Association="Self.FK_GradeDesignation_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="GradeDesignation" EntitySet="GradeDesignation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeStrikeCharacter_Grade" Association="Self.FK_GradeStrikeCharacter_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="GradeStrikeCharacter" EntitySet="GradeStrikeCharacter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GradeStrikeCharacter_StrikeCharacter" Association="Self.FK_GradeStrikeCharacter_StrikeCharacter">
+            <End Role="StrikeCharacter" EntitySet="StrikeCharacter" />
+            <End Role="GradeStrikeCharacter" EntitySet="GradeStrikeCharacter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Metal" Association="Self.FK_Item_Metal">
+            <End Role="Metal" EntitySet="Metal" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Mint" Association="Self.FK_Item_Mint">
+            <End Role="Mint" EntitySet="Mint" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Uom" Association="Self.FK_Item_Uom">
+            <End Role="Uom" EntitySet="Uom" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemPrice_PriceSource" Association="Self.FK_ItemPrice_PriceSource">
+            <End Role="PriceSource" EntitySet="PriceSource" />
+            <End Role="ItemPrice" EntitySet="ItemPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_Grade" Association="Self.FK_PriceSource_Grade">
+            <End Role="Grade" EntitySet="Grade" />
+            <End Role="PriceSource" EntitySet="PriceSource" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_GradingService" Association="Self.FK_PriceSource_GradingService">
+            <End Role="GradingService" EntitySet="GradingService" />
+            <End Role="PriceSource" EntitySet="PriceSource" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_Item" Association="Self.FK_PriceSource_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="PriceSource" EntitySet="PriceSource" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_Source" Association="Self.FK_PriceSource_Source">
+            <End Role="Source" EntitySet="Source" />
+            <End Role="PriceSource" EntitySet="PriceSource" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purity_Metal" Association="Self.FK_Purity_Metal">
+            <End Role="Metal" EntitySet="Metal" />
+            <End Role="Purity" EntitySet="Purity" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="PriceScopeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="PriceScopeEntities" annotation:LazyLoadingEnabled="true" />
+      <Schema Namespace="JH.PriceScope.Entity" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PriceScopeEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Designations" EntityType="JH.PriceScope.Entity.Designation" />
+          <EntitySet Name="Grades" EntityType="JH.PriceScope.Entity.Grade" />
+          <EntitySet Name="GradingServices" EntityType="JH.PriceScope.Entity.GradingService" />
+          <EntitySet Name="Items" EntityType="JH.PriceScope.Entity.Item" />
+          <EntitySet Name="ItemPrices" EntityType="JH.PriceScope.Entity.ItemPrice" />
+          <EntitySet Name="Metals" EntityType="JH.PriceScope.Entity.Metal" />
+          <EntitySet Name="Mints" EntityType="JH.PriceScope.Entity.Mint" />
+          <EntitySet Name="PriceSources" EntityType="JH.PriceScope.Entity.PriceSource" />
+          <EntitySet Name="Purities" EntityType="JH.PriceScope.Entity.Purity" />
+          <EntitySet Name="Sources" EntityType="JH.PriceScope.Entity.Source" />
+          <EntitySet Name="StrikeCharacters" EntityType="JH.PriceScope.Entity.StrikeCharacter" />
+          <EntitySet Name="StrikeTypes" EntityType="JH.PriceScope.Entity.StrikeType" />
+          <EntitySet Name="Uoms" EntityType="JH.PriceScope.Entity.Uom" />
+          <AssociationSet Name="FK_Grade_StrikeType" Association="JH.PriceScope.Entity.FK_Grade_StrikeType">
+            <End Role="StrikeType" EntitySet="StrikeTypes" />
+            <End Role="Grade" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_Grade" Association="JH.PriceScope.Entity.FK_PriceSource_Grade">
+            <End Role="Grade" EntitySet="Grades" />
+            <End Role="PriceSource" EntitySet="PriceSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_GradingService" Association="JH.PriceScope.Entity.FK_PriceSource_GradingService">
+            <End Role="GradingService" EntitySet="GradingServices" />
+            <End Role="PriceSource" EntitySet="PriceSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Metal" Association="JH.PriceScope.Entity.FK_Item_Metal">
+            <End Role="Metal" EntitySet="Metals" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Mint" Association="JH.PriceScope.Entity.FK_Item_Mint">
+            <End Role="Mint" EntitySet="Mints" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Item_Uom" Association="JH.PriceScope.Entity.FK_Item_Uom">
+            <End Role="Uom" EntitySet="Uoms" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_Item" Association="JH.PriceScope.Entity.FK_PriceSource_Item">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="PriceSource" EntitySet="PriceSources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemPrice_PriceSource" Association="JH.PriceScope.Entity.FK_ItemPrice_PriceSource">
+            <End Role="PriceSource" EntitySet="PriceSources" />
+            <End Role="ItemPrice" EntitySet="ItemPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Purity_Metal" Association="JH.PriceScope.Entity.FK_Purity_Metal">
+            <End Role="Metal" EntitySet="Metals" />
+            <End Role="Purity" EntitySet="Purities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PriceSource_Source" Association="JH.PriceScope.Entity.FK_PriceSource_Source">
+            <End Role="Source" EntitySet="Sources" />
+            <End Role="PriceSource" EntitySet="PriceSources" />
+          </AssociationSet>
+          <AssociationSet Name="GradeDesignation" Association="JH.PriceScope.Entity.GradeDesignation">
+            <End Role="Designation" EntitySet="Designations" />
+            <End Role="Grade" EntitySet="Grades" />
+          </AssociationSet>
+          <AssociationSet Name="GradeStrikeCharacter" Association="JH.PriceScope.Entity.GradeStrikeCharacter">
+            <End Role="Grade" EntitySet="Grades" />
+            <End Role="StrikeCharacter" EntitySet="StrikeCharacters" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Designation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Grades" Relationship="JH.PriceScope.Entity.GradeDesignation" FromRole="Designation" ToRole="Grade" />
+        </EntityType>
+        <EntityType Name="Grade">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="StrikeTypeId" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Score" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="StrikeType" Relationship="JH.PriceScope.Entity.FK_Grade_StrikeType" FromRole="Grade" ToRole="StrikeType" />
+          <NavigationProperty Name="PriceSources" Relationship="JH.PriceScope.Entity.FK_PriceSource_Grade" FromRole="Grade" ToRole="PriceSource" />
+          <NavigationProperty Name="Designations" Relationship="JH.PriceScope.Entity.GradeDesignation" FromRole="Grade" ToRole="Designation" />
+          <NavigationProperty Name="StrikeCharacters" Relationship="JH.PriceScope.Entity.GradeStrikeCharacter" FromRole="Grade" ToRole="StrikeCharacter" />
+        </EntityType>
+        <EntityType Name="GradingService">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PriceSources" Relationship="JH.PriceScope.Entity.FK_PriceSource_GradingService" FromRole="GradingService" ToRole="PriceSource" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MintId" Type="Int32" Nullable="false" />
+          <Property Name="MetalId" Type="Int32" Nullable="false" />
+          <Property Name="TotalWeight" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="UomId" Type="Int32" Nullable="false" />
+          <Property Name="PurityId" Type="Int32" Nullable="false" />
+          <Property Name="ActualMetalWeightTroyOz" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="EBayCategoryId" Type="Int32" />
+          <Property Name="FirstYear" Type="Int32" />
+          <Property Name="LastYear" Type="Int32" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Metal" Relationship="JH.PriceScope.Entity.FK_Item_Metal" FromRole="Item" ToRole="Metal" />
+          <NavigationProperty Name="Mint" Relationship="JH.PriceScope.Entity.FK_Item_Mint" FromRole="Item" ToRole="Mint" />
+          <NavigationProperty Name="Uom" Relationship="JH.PriceScope.Entity.FK_Item_Uom" FromRole="Item" ToRole="Uom" />
+          <NavigationProperty Name="PriceSources" Relationship="JH.PriceScope.Entity.FK_PriceSource_Item" FromRole="Item" ToRole="PriceSource" />
+        </EntityType>
+        <EntityType Name="ItemPrice">
+          <Key>
+            <PropertyRef Name="PriceSourceId" />
+            <PropertyRef Name="UpdateTime" />
+          </Key>
+          <Property Name="PriceSourceId" Type="Int32" Nullable="false" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MinPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="MaxPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="WireCheckPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CCPaypalPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="BitcoinPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="PriceSource" Relationship="JH.PriceScope.Entity.FK_ItemPrice_PriceSource" FromRole="ItemPrice" ToRole="PriceSource" />
+          <Property Name="ItemUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Metal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Items" Relationship="JH.PriceScope.Entity.FK_Item_Metal" FromRole="Metal" ToRole="Item" />
+          <NavigationProperty Name="Purities" Relationship="JH.PriceScope.Entity.FK_Purity_Metal" FromRole="Metal" ToRole="Purity" />
+        </EntityType>
+        <EntityType Name="Mint">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="JH.PriceScope.Entity.FK_Item_Mint" FromRole="Mint" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="PriceSource">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="GradeId" Type="Int32" Nullable="false" />
+          <Property Name="GradingServiceId" Type="Int32" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="ItemYearFrom" Type="Int32" Nullable="false" />
+          <Property Name="ItemYearTo" Type="Int32" Nullable="false" />
+          <Property Name="MintMark" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="WebsiteUrl" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ElementQuery" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="eBayQuery" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LastChecked" Type="DateTime" Precision="3" />
+          <Property Name="HasError" Type="Boolean" Nullable="false" />
+          <Property Name="LastError" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Grade" Relationship="JH.PriceScope.Entity.FK_PriceSource_Grade" FromRole="PriceSource" ToRole="Grade" />
+          <NavigationProperty Name="GradingService" Relationship="JH.PriceScope.Entity.FK_PriceSource_GradingService" FromRole="PriceSource" ToRole="GradingService" />
+          <NavigationProperty Name="Item" Relationship="JH.PriceScope.Entity.FK_PriceSource_Item" FromRole="PriceSource" ToRole="Item" />
+          <NavigationProperty Name="ItemPrices" Relationship="JH.PriceScope.Entity.FK_ItemPrice_PriceSource" FromRole="PriceSource" ToRole="ItemPrice" />
+          <NavigationProperty Name="Source" Relationship="JH.PriceScope.Entity.FK_PriceSource_Source" FromRole="PriceSource" ToRole="Source" />
+        </EntityType>
+        <EntityType Name="Purity">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MetalId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Metal" Relationship="JH.PriceScope.Entity.FK_Purity_Metal" FromRole="Purity" ToRole="Metal" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PriceSources" Relationship="JH.PriceScope.Entity.FK_PriceSource_Source" FromRole="Source" ToRole="PriceSource" />
+        </EntityType>
+        <EntityType Name="StrikeCharacter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Census" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Label" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Grades" Relationship="JH.PriceScope.Entity.GradeStrikeCharacter" FromRole="StrikeCharacter" ToRole="Grade" />
+        </EntityType>
+        <EntityType Name="StrikeType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Grades" Relationship="JH.PriceScope.Entity.FK_Grade_StrikeType" FromRole="StrikeType" ToRole="Grade" />
+        </EntityType>
+        <EntityType Name="Uom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Items" Relationship="JH.PriceScope.Entity.FK_Item_Uom" FromRole="Uom" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK_Grade_StrikeType">
+          <End Type="JH.PriceScope.Entity.StrikeType" Role="StrikeType" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.Grade" Role="Grade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StrikeType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Grade">
+              <PropertyRef Name="StrikeTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_Grade">
+          <End Type="JH.PriceScope.Entity.Grade" Role="Grade" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.PriceSource" Role="PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grade">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="GradeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_GradingService">
+          <End Type="JH.PriceScope.Entity.GradingService" Role="GradingService" Multiplicity="0..1" />
+          <End Type="JH.PriceScope.Entity.PriceSource" Role="PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GradingService">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="GradingServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Metal">
+          <End Type="JH.PriceScope.Entity.Metal" Role="Metal" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="MetalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Mint">
+          <End Type="JH.PriceScope.Entity.Mint" Role="Mint" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mint">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="MintId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Item_Uom">
+          <End Type="JH.PriceScope.Entity.Uom" Role="Uom" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="UomId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_Item">
+          <End Type="JH.PriceScope.Entity.Item" Role="Item" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.PriceSource" Role="PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemPrice_PriceSource">
+          <End Type="JH.PriceScope.Entity.PriceSource" Role="PriceSource" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.ItemPrice" Role="ItemPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PriceSource">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemPrice">
+              <PropertyRef Name="PriceSourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Purity_Metal">
+          <End Type="JH.PriceScope.Entity.Metal" Role="Metal" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.Purity" Role="Purity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metal">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Purity">
+              <PropertyRef Name="MetalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PriceSource_Source">
+          <End Type="JH.PriceScope.Entity.Source" Role="Source" Multiplicity="1" />
+          <End Type="JH.PriceScope.Entity.PriceSource" Role="PriceSource" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PriceSource">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GradeDesignation">
+          <End Type="JH.PriceScope.Entity.Designation" Role="Designation" Multiplicity="*" />
+          <End Type="JH.PriceScope.Entity.Grade" Role="Grade" Multiplicity="*" />
+        </Association>
+        <Association Name="GradeStrikeCharacter">
+          <End Type="JH.PriceScope.Entity.Grade" Role="Grade" Multiplicity="*" />
+          <End Type="JH.PriceScope.Entity.StrikeCharacter" Role="StrikeCharacter" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PriceScopeModelStoreContainer" CdmEntityContainer="PriceScopeEntities" />
+        <EntityContainerMapping StorageEntityContainer="PriceScopeModelStoreContainer" CdmEntityContainer="PriceScopeEntities" >
+          <EntitySetMapping Name="Designations">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Designation">
+              <MappingFragment StoreEntitySet="Designation">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grades">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Grade">
+              <MappingFragment StoreEntitySet="Grade">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="StrikeTypeId" ColumnName="StrikeTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GradingServices">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.GradingService">
+              <MappingFragment StoreEntitySet="GradingService">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="LastYear" ColumnName="LastYear" />
+                <ScalarProperty Name="FirstYear" ColumnName="FirstYear" />
+                <ScalarProperty Name="EBayCategoryId" ColumnName="EBayCategoryId" />
+                <ScalarProperty Name="ActualMetalWeightTroyOz" ColumnName="ActualMetalWeightTroyOz" />
+                <ScalarProperty Name="PurityId" ColumnName="PurityId" />
+                <ScalarProperty Name="UomId" ColumnName="UomId" />
+                <ScalarProperty Name="TotalWeight" ColumnName="TotalWeight" />
+                <ScalarProperty Name="MetalId" ColumnName="MetalId" />
+                <ScalarProperty Name="MintId" ColumnName="MintId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemPrices">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.ItemPrice">
+              <MappingFragment StoreEntitySet="ItemPrice">
+                <ScalarProperty Name="ItemUrl" ColumnName="ItemUrl" />
+                <ScalarProperty Name="BitcoinPrice" ColumnName="BitcoinPrice" />
+                <ScalarProperty Name="CCPaypalPrice" ColumnName="CCPaypalPrice" />
+                <ScalarProperty Name="WireCheckPrice" ColumnName="WireCheckPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="PriceSourceId" ColumnName="PriceSourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Metals">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Metal">
+              <MappingFragment StoreEntitySet="Metal">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mints">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Mint">
+              <MappingFragment StoreEntitySet="Mint">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PriceSources">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.PriceSource">
+              <MappingFragment StoreEntitySet="PriceSource">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="LastError" ColumnName="LastError" />
+                <ScalarProperty Name="HasError" ColumnName="HasError" />
+                <ScalarProperty Name="LastChecked" ColumnName="LastChecked" />
+                <ScalarProperty Name="eBayQuery" ColumnName="eBayQuery" />
+                <ScalarProperty Name="ElementQuery" ColumnName="ElementQuery" />
+                <ScalarProperty Name="WebsiteUrl" ColumnName="WebsiteUrl" />
+                <ScalarProperty Name="MintMark" ColumnName="MintMark" />
+                <ScalarProperty Name="ItemYearTo" ColumnName="ItemYearTo" />
+                <ScalarProperty Name="ItemYearFrom" ColumnName="ItemYearFrom" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="GradingServiceId" ColumnName="GradingServiceId" />
+                <ScalarProperty Name="GradeId" ColumnName="GradeId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Purities">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Purity">
+              <MappingFragment StoreEntitySet="Purity">
+                <ScalarProperty Name="MetalId" ColumnName="MetalId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Source">
+              <MappingFragment StoreEntitySet="Source">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StrikeCharacters">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.StrikeCharacter">
+              <MappingFragment StoreEntitySet="StrikeCharacter">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Census" ColumnName="Census" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StrikeTypes">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.StrikeType">
+              <MappingFragment StoreEntitySet="StrikeType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uoms">
+            <EntityTypeMapping TypeName="JH.PriceScope.Entity.Uom">
+              <MappingFragment StoreEntitySet="Uom">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="GradeDesignation" TypeName="JH.PriceScope.Entity.GradeDesignation" StoreEntitySet="GradeDesignation">
+            <EndProperty Name="Grade">
+              <ScalarProperty Name="Id" ColumnName="GradeId" />
+            </EndProperty>
+            <EndProperty Name="Designation">
+              <ScalarProperty Name="Id" ColumnName="DesignationId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="GradeStrikeCharacter" TypeName="JH.PriceScope.Entity.GradeStrikeCharacter" StoreEntitySet="GradeStrikeCharacter">
+            <EndProperty Name="StrikeCharacter">
+              <ScalarProperty Name="Id" ColumnName="StrikeCharacterId" />
+            </EndProperty>
+            <EndProperty Name="Grade">
+              <ScalarProperty Name="Id" ColumnName="GradeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

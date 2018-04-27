@@ -4,7 +4,33 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4f682e6af031414a9e062c0cc23217b7" Name="Diagram1" />
+      <Diagram DiagramId="4f682e6af031414a9e062c0cc23217b7" Name="Diagram1" ZoomLevel="85" >
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Designation" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Grade" Width="1.5" PointX="3" PointY="13.125" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.GradingService" Width="1.5" PointX="3" PointY="17.5" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Item" Width="1.5" PointX="3" PointY="2.625" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.ItemPrice" Width="1.5" PointX="7.5" PointY="3.625" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Metal" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Mint" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.PriceSource" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Purity" Width="1.5" PointX="3" PointY="9.25" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Source" Width="1.5" PointX="3" PointY="20" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.StrikeCharacter" Width="1.5" PointX="5.25" PointY="13.625" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.StrikeType" Width="1.5" PointX="0.75" PointY="14.875" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.Uom" Width="1.5" PointX="0.75" PointY="0.875" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_Grade_StrikeType" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_PriceSource_Grade" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_PriceSource_GradingService" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_Item_Metal" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_Item_Mint" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_Item_Uom" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_PriceSource_Item" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_ItemPrice_PriceSource" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_Purity_Metal" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_PriceSource_Source" />
+        <AssociationConnector Association="JH.PriceScope.Entity.GradeDesignation" />
+        <AssociationConnector Association="JH.PriceScope.Entity.GradeStrikeCharacter" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
