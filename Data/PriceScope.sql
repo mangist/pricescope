@@ -458,4 +458,5 @@ from Item i
   inner join Grade g on ps.GradeId = g.Id
   inner join ItemPrice ip on ip.UpdateTime = ps.LastChecked
 group by i.Description, ps.ItemYearFrom, ps.MintMark
-order by i.Description, ps.ItemYearFrom, ps.MintMark
+--order by [MS-65]
+order by [MS-66] --  i.Description, ps.ItemYearFrom, ps.MintMark
