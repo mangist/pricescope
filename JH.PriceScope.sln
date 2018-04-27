@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JH.PriceScope", "JH.PriceScope\JH.PriceScope.csproj", "{39065AF3-0128-47FA-93B3-F227DD3728B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JH.Loader", "JH.Loader\JH.Loader.csproj", "{93EC0887-73B4-49AB-9BBD-055C940E9C7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{AC3E7A22-8166-4A30-ACA6-A38255985CAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39065AF3-0128-47FA-93B3-F227DD3728B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39065AF3-0128-47FA-93B3-F227DD3728B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39065AF3-0128-47FA-93B3-F227DD3728B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39065AF3-0128-47FA-93B3-F227DD3728B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93EC0887-73B4-49AB-9BBD-055C940E9C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93EC0887-73B4-49AB-9BBD-055C940E9C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93EC0887-73B4-49AB-9BBD-055C940E9C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93EC0887-73B4-49AB-9BBD-055C940E9C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3E7A22-8166-4A30-ACA6-A38255985CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3E7A22-8166-4A30-ACA6-A38255985CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3E7A22-8166-4A30-ACA6-A38255985CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3E7A22-8166-4A30-ACA6-A38255985CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9925F1E0-3EA2-43DE-828E-D249C15F7691}
+	EndGlobalSection
+EndGlobal
