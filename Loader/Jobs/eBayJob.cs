@@ -69,48 +69,13 @@ namespace JH.PriceScope.Loader.Jobs
                         // Query each price source
                         foreach (var ps in priceSources)
                         {
-                            // Build eBay request
-                            var req = BuildRequest(ps.eBayQuery);
+                            // Build eBay request for fixed price listings
+                            var fixedPriceReq = BuildFixedPriceRequest(ps.eBayQuery);
+                            HandleRequest(client, dal, fixedPriceReq, ps.Id);
 
-                            // Call eBay API
-                            try
-                            {
-                                log.Info($"Calling FindingAPI (keywords={req.keywords})");
-
-                                var response = client.findItemsByKeywords(req);
-
-                                // Build results for ItemPrice 
-                                var result = new ItemPrice
-                                {
-                                    PriceSourceId = ps.Id,
-                                    UpdateTime = DateTime.Now
-                                };
-
-                                log.Info($"Found {response.searchResult.count} items");
-                                var items = response.searchResult.item;
-
-                                if (response.searchResult.count > 0)
-                                {
-                                    result.CCPaypalPrice = Convert.ToDecimal(items.Min(i => i.sellingStatus.currentPrice.Value));
-                                    result.MinPrice = result.CCPaypalPrice;
-                                    result.MaxPrice = Convert.ToDecimal(items.Max(i => i.sellingStatus.currentPrice.Value));
-
-                                    result.ItemUrl = items.First().viewItemURL;
-
-                                    // Update result
-                                    dal.UpdateItemPrice(result, false, null);
-                                }
-                                else
-                                {
-                                    // What do we do when there is no result
-                                    dal.UpdatePriceSourceError(ps.Id, Strings.NoListings);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                // Update PriceSource with last error
-                                dal.UpdatePriceSourceError(ps.Id, ex.Message);
-                            }
+                            // Build eBay request for auctions closing soon
+                            var auctionReq = BuildAuctionRequest(ps.eBayQuery);
+                            HandleRequest(client, dal, auctionReq, ps.Id);
                         }
                     }
                 }
@@ -125,7 +90,49 @@ namespace JH.PriceScope.Loader.Jobs
             return Task.CompletedTask;
         }
 
-        private FindItemsByKeywordsRequest BuildRequest(string keywords, int pageNumber = 1, int entriesPerPage = 10)
+        private void HandleRequest(FindingServicePortTypeClient client, DataLayer dal, FindItemsByKeywordsRequest req, int priceSourceId)
+        {
+            try
+            {
+                log.Info($"Calling FindingAPI (keywords={req.keywords})");
+
+                var response = client.findItemsByKeywords(req);
+
+                // Build results for ItemPrice 
+                var result = new ItemPrice
+                {
+                    PriceSourceId = priceSourceId,
+                    UpdateTime = DateTime.Now
+                };
+
+                log.Info($"Found {response.searchResult.count} items");
+                var items = response.searchResult.item;
+
+                if (response.searchResult.count > 0)
+                {
+                    result.CCPaypalPrice = Convert.ToDecimal(items.Min(i => i.sellingStatus.currentPrice.Value));
+                    result.MinPrice = result.CCPaypalPrice;
+                    result.MaxPrice = Convert.ToDecimal(items.Max(i => i.sellingStatus.currentPrice.Value));
+
+                    result.ItemUrl = items.First().viewItemURL;
+
+                    // Update result
+                    dal.UpdateItemPrice(result, false, null);
+                }
+                else
+                {
+                    // What do we do when there is no result
+                    dal.UpdatePriceSourceError(priceSourceId, Strings.NoListings);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Update PriceSource with last error
+                dal.UpdatePriceSourceError(priceSourceId, ex.Message);
+            }
+        }
+
+        private FindItemsByKeywordsRequest BuildFixedPriceRequest(string keywords, int pageNumber = 1, int entriesPerPage = 10)
         {
             var req = new EBayApi.FindItemsByKeywordsRequest();
             req.keywords = keywords;
@@ -136,11 +143,43 @@ namespace JH.PriceScope.Loader.Jobs
                 pageNumber = pageNumber,
                 entriesPerPage = entriesPerPage
             };
+
+            // Listing types (fixed and auction)
             req.itemFilter = new ItemFilter[1];
             req.itemFilter[0] = new ItemFilter
             {
                 name = ItemFilterType.ListingType,
-                value = new string[] { "FixedPrice" }
+                value = new string[] { "FixedPrice", "AuctionWithBIN" }
+            };
+
+            return req;
+        }
+
+        private FindItemsByKeywordsRequest BuildAuctionRequest(string keywords, int pageNumber = 1, int entriesPerPage = 10)
+        {
+            var req = new EBayApi.FindItemsByKeywordsRequest();
+            req.keywords = keywords;
+            req.buyerPostalCode = BuyerPostalCode;
+            req.sortOrder = EBayApi.SortOrderType.PricePlusShippingLowest;
+            req.paginationInput = new PaginationInput
+            {
+                pageNumber = pageNumber,
+                entriesPerPage = entriesPerPage
+            };
+
+            // Listing types (fixed and auction)
+            req.itemFilter = new ItemFilter[2];
+            req.itemFilter[0] = new ItemFilter
+            {
+                name = ItemFilterType.ListingType,
+                value = new string[] { "Auction", "AuctionWithBIN" }
+            };
+
+            //Auctions ending in 4 hours
+            req.itemFilter[1] = new ItemFilter
+            {
+                name = ItemFilterType.EndTimeTo,
+                value = new string[] { DateTime.UtcNow.AddHours(4.0).ToString("o") }
             };
 
             return req;

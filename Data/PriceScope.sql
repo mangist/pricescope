@@ -56,10 +56,9 @@ create table Purity (
   MetalId int not null,
   constraint PK_Purity primary key (Id),
   constraint FK_Purity_Metal foreign key (MetalId) references Metal (Id),
-  constraint UK_Purity unique (Description)
+  constraint UK_Purity unique (Description, MetalId)
 )
 go
-
 
 insert into Purity values ('9999 (pure)', 1)
 insert into Purity values ('999 (24k)', 1)
@@ -316,6 +315,23 @@ create table ItemPrice (
   ItemUrl nvarchar(max) null,
   constraint PK_ItemPrice primary key (PriceSourceId, UpdateTime),
   constraint FK_ItemPrice_PriceSource foreign key (PriceSourceId) references PriceSource (Id)
+)
+go
+
+create table ItemStats (
+  Id int not null identity (1,1),
+  ItemId int not null,
+  ItemYear int not null, 
+  MintMark nvarchar(10) not null,
+  GradeId int not null,
+  GradingServiceId int not null,
+  [Population] int null,
+  PriceGuide money null,
+  LastUpdate datetime not null,
+  constraint PK_ItemStats primary key (Id),
+  constraint FK_ItemStats_Item foreign key (ItemId) references Item (Id),
+  constraint FK_ItemStats_Grade foreign key (GradeId) references Grade (Id),
+  constraint FK_ItemStats_GradingService foreign key (GradingServiceId) references GradingService (Id)
 )
 go
 
