@@ -18,10 +18,14 @@ namespace JH.PriceScope.Data
         public System.DateTime UpdateTime { get; set; }
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }
-        public decimal WireCheckPrice { get; set; }
-        public decimal CCPaypalPrice { get; set; }
-        public decimal BitcoinPrice { get; set; }
-        public string ItemUrl { get; set; }
+        public Nullable<decimal> LowCashPrice { get; set; }
+        public Nullable<decimal> LowCreditPrice { get; set; }
+        public Nullable<decimal> LowCryptoPrice { get; set; }
+        public Nullable<decimal> AuctionBid { get; set; }
+        public Nullable<System.DateTime> AuctionEndDate { get; set; }
+        public Nullable<bool> AuctionReserveMet { get; set; }
+        public string ItemSaleUrl { get; set; }
+        public string ItemAuctionUrl { get; set; }
     
         public virtual PriceSource PriceSource { get; set; }
     }

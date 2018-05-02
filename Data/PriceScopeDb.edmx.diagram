@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="JH.PriceScope.Entity.Grade" Width="1.5" PointX="3" PointY="13.125" />
         <EntityTypeShape EntityType="JH.PriceScope.Entity.GradingService" Width="1.5" PointX="3" PointY="17.5" />
         <EntityTypeShape EntityType="JH.PriceScope.Entity.Item" Width="1.5" PointX="3" PointY="2.625" />
-        <EntityTypeShape EntityType="JH.PriceScope.Entity.ItemPrice" Width="1.5" PointX="7.5" PointY="3.625" />
         <EntityTypeShape EntityType="JH.PriceScope.Entity.Metal" Width="1.5" PointX="0.75" PointY="4" />
         <EntityTypeShape EntityType="JH.PriceScope.Entity.Mint" Width="1.5" PointX="0.75" PointY="7.125" />
         <EntityTypeShape EntityType="JH.PriceScope.Entity.PriceSource" Width="1.5" PointX="5.25" PointY="2.5" />
@@ -25,11 +24,18 @@
         <AssociationConnector Association="JH.PriceScope.Entity.FK_Item_Mint" />
         <AssociationConnector Association="JH.PriceScope.Entity.FK_Item_Uom" />
         <AssociationConnector Association="JH.PriceScope.Entity.FK_PriceSource_Item" />
-        <AssociationConnector Association="JH.PriceScope.Entity.FK_ItemPrice_PriceSource" />
         <AssociationConnector Association="JH.PriceScope.Entity.FK_Purity_Metal" />
         <AssociationConnector Association="JH.PriceScope.Entity.FK_PriceSource_Source" />
         <AssociationConnector Association="JH.PriceScope.Entity.GradeDesignation" />
         <AssociationConnector Association="JH.PriceScope.Entity.GradeStrikeCharacter" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.ItemStat" Width="1.5" PointX="5.25" PointY="9.375" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.SourceParameter" Width="1.5" PointX="5.25" PointY="20.125" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_ItemStats_Grade" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_ItemStats_GradingService" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_ItemStats_Item" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_SourceParameter_Source" />
+        <EntityTypeShape EntityType="JH.PriceScope.Entity.ItemPrice" Width="1.5" PointX="7.5" PointY="3.125" />
+        <AssociationConnector Association="JH.PriceScope.Entity.FK_ItemPrice_PriceSource" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -41,6 +41,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -64,6 +65,9 @@
       <DependentUpon>PriceScopeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemPrice.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemStat.cs">
       <DependentUpon>PriceScopeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Metal.cs">
@@ -95,6 +99,9 @@
       <DependentUpon>PriceScopeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Source.cs">
+      <DependentUpon>PriceScopeDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SourceParameter.cs">
       <DependentUpon>PriceScopeDb.tt</DependentUpon>
     </Compile>
     <Compile Include="StrikeCharacter.cs">
@@ -132,6 +139,7 @@
       <DependentUpon>PriceScopeDb.edmx</DependentUpon>
       <LastGenOutput>PriceScopeDb.cs</LastGenOutput>
     </Content>
+    <Content Include="SQL Queries\MS prices.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

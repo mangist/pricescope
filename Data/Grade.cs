@@ -20,6 +20,7 @@ namespace JH.PriceScope.Data
             this.PriceSources = new HashSet<PriceSource>();
             this.Designations = new HashSet<Designation>();
             this.StrikeCharacters = new HashSet<StrikeCharacter>();
+            this.ItemStats = new HashSet<ItemStat>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,7 @@ namespace JH.PriceScope.Data
         public virtual ICollection<Designation> Designations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StrikeCharacter> StrikeCharacters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemStat> ItemStats { get; set; }
     }
 }

@@ -24,13 +24,18 @@ namespace JH.PriceScope.Loader
 
                 // eBay job
                 var trigger = GetHourlyTrigger("ebay");
-                var eBay = GetJob<EBayJob>("ebay");
-                await scheduler.ScheduleJob(eBay, trigger);
+                //var eBay = GetJob<EBayJob>("ebay");
+                //await scheduler.ScheduleJob(eBay, trigger);
 
-                // Web job
-                trigger = GetHourlyTrigger("web");
-                var web = GetJob<WebJob>("web");
-                await scheduler.ScheduleJob(web, trigger);
+                //// Web job
+                //trigger = GetHourlyTrigger("web");
+                //var web = GetJob<WebJob>("web");
+                //await scheduler.ScheduleJob(web, trigger);
+
+                // PCGS Job
+                trigger = GetHourlyTrigger("pcgs");
+                var pcgs = GetJob<PcgsJob>("pcgs");
+                await scheduler.ScheduleJob(pcgs, trigger);
             }
             catch (SchedulerException se)
             {

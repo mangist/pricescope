@@ -121,8 +121,7 @@ create table Grade (
   Active bit not null constraint DF_Grade_Active default (1)
   constraint PK_Grade primary key (Id),
   constraint FK_Grade_StrikeType foreign key (StrikeTypeId) references StrikeType (Id),
-  constraint UK_Grade unique (Description),
-  constraint UK_Grade_StrikeTypeScore unique (StrikeTypeId, Score)
+  constraint UK_Grade unique (Description)
 )
 go
 
@@ -277,6 +276,7 @@ insert into Source values (9, 'Bgasc', 1)
 insert into Source values (10, 'Silver.com', 1)
 insert into Source values (11, 'Gainesville', 1)
 insert into Source values (12, 'Monument Metals', 1)
+insert into Source values (13, 'Collectors Corner', 1)
 go
 
 create table PriceSource (
@@ -309,10 +309,14 @@ create table ItemPrice (
   UpdateTime datetime not null,
   MinPrice money not null, -- for eBay
   MaxPrice money not null, -- for eBay
-  WireCheckPrice money not null,
-  CCPaypalPrice money not null,
-  BitcoinPrice money not null,
-  ItemUrl nvarchar(max) null,
+  LowCashPrice money null,
+  LowCreditPrice money null,
+  LowCryptoPrice money null,
+  AuctionBid money null,
+  AuctionEndDate datetime null,
+  AuctionReserveMet bit null,
+  ItemSaleUrl nvarchar(max) null,
+  ItemAuctionUrl nvarchar(max) null,
   constraint PK_ItemPrice primary key (PriceSourceId, UpdateTime),
   constraint FK_ItemPrice_PriceSource foreign key (PriceSourceId) references PriceSource (Id)
 )
@@ -335,6 +339,15 @@ create table ItemStats (
 )
 go
 
+create table SourceParameter (
+   SourceId int not null,
+   ParamKey varchar(100) not null,
+   ParamValue nvarchar(max) null,
+   constraint PK_SourceParameter primary key (SourceId, ParamKey),
+   constraint FK_SourceParameter_Source foreign key (SourceId) references Source (Id)
+)
+go
+
 -- Fill in some basic items to start testing 
 insert into Item values ('Saint Gaudens $20 Gold (1907-1933)', 1, 1, 33.431, 2, 15, 0.96750, 39472, 1907, 1933, 1, getdate(), null)
 insert into Item values ('Morgan Dollar', 1, 2, 26.73, 2, 12, 0.7734, 39464, 1878, 1921, 1, getdate(), null)
@@ -351,6 +364,38 @@ insert into Grade values ('MS 63', 'MS', 63, 1)
 insert into Grade values ('MS 62', 'MS', 62, 1)
 insert into Grade values ('MS 61', 'MS', 61, 1)
 insert into Grade values ('MS 60', 'MS', 60, 1)
+go
+
+-- Plus grades
+declare @GradeId int
+insert into Grade values ('MS 68+', 'MS', 68, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
+insert into Grade values ('MS 67+', 'MS', 67, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
+insert into Grade values ('MS 66+', 'MS', 66, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
+insert into Grade values ('MS 65+', 'MS', 65, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
+insert into Grade values ('MS 64+', 'MS', 64, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
+insert into Grade values ('MS 63+', 'MS', 63, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
+insert into Grade values ('MS 62+', 'MS', 62, 1)
+set @GradeId = scope_identity()
+insert into GradeDesignation values (@GradeId, '+')
+
 
 insert into PriceSource values (1, 7/*MS64*/, 2/*NGC*/,  1, 1907, 1907, '', '', '', '1907 gaudens ngc ms 64 -random', null, 0, null, 1)
 insert into PriceSource values (1, 7/*MS64*/, 1/*PCGS*/, 1, 1907, 1907, '', '', '', '1907 gaudens pcgs ms 64 -random', null, 0, null, 1)
@@ -450,29 +495,3 @@ from PriceSource p
   inner join Grade g on g.Score = 66
 where p.GradeId = 6
   and not exists ( select * from PriceSource p2 where p2.GradeId = g.Id and p2.ItemId = p.ItemId and p2.ItemYearFrom = p.ItemYearFrom)
-
-
--- Query current MS64/65/66 prices from both NGC and PCGS
-select i.Description as [Item], ps.ItemYearFrom as [Year], ps.MintMark, g.Description as [Grade], gs.Code as [Service], ip.UpdateTime, ip.MinPrice, ip.ItemUrl
-from ItemPrice ip 
-  inner join PriceSource ps on ip.PriceSourceId = ps.Id
-  inner join Item i on ps.ItemId = i.Id
-  inner join Grade g on ps.GradeId = g.Id
-  inner join GradingService gs on ps.GradingServiceId = gs.Id 
-where ip.UpdateTime = ps.LastChecked
-order by i.Description
-
--- Query current MS64/65/66 prices from both NGC and PCGS
-select i.Description as [Item]
-  ,ps.ItemYearFrom as [Year]
-  ,ps.MintMark
-  ,min(case when g.Score = 64 then ip.MinPrice else null end) as [MS-64]
-  ,min(case when g.Score = 65 then ip.MinPrice else null end) as [MS-65]
-  ,min(case when g.Score = 66 then ip.MinPrice else null end) as [MS-66]
-from Item i
-  inner join PriceSource ps on ps.ItemId = i.Id
-  inner join Grade g on ps.GradeId = g.Id
-  inner join ItemPrice ip on ip.UpdateTime = ps.LastChecked
-group by i.Description, ps.ItemYearFrom, ps.MintMark
---order by [MS-65]
-order by [MS-66] --  i.Description, ps.ItemYearFrom, ps.MintMark

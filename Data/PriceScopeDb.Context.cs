@@ -29,7 +29,6 @@ namespace JH.PriceScope.Data
         public virtual DbSet<Grade> Grades { get; set; }
         public virtual DbSet<GradingService> GradingServices { get; set; }
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<ItemPrice> ItemPrices { get; set; }
         public virtual DbSet<Metal> Metals { get; set; }
         public virtual DbSet<Mint> Mints { get; set; }
         public virtual DbSet<PriceSource> PriceSources { get; set; }
@@ -38,5 +37,8 @@ namespace JH.PriceScope.Data
         public virtual DbSet<StrikeCharacter> StrikeCharacters { get; set; }
         public virtual DbSet<StrikeType> StrikeTypes { get; set; }
         public virtual DbSet<Uom> Uoms { get; set; }
+        public virtual DbSet<ItemStat> ItemStats { get; set; }
+        public virtual DbSet<SourceParameter> SourceParameters { get; set; }
+        public virtual DbSet<ItemPrice> ItemPrices { get; set; }
     }
 }

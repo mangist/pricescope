@@ -18,6 +18,7 @@ namespace JH.PriceScope.Data
         public Source()
         {
             this.PriceSources = new HashSet<PriceSource>();
+            this.SourceParameters = new HashSet<SourceParameter>();
         }
     
         public int Id { get; set; }
@@ -26,5 +27,7 @@ namespace JH.PriceScope.Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PriceSource> PriceSources { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SourceParameter> SourceParameters { get; set; }
     }
 }

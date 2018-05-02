@@ -73,8 +73,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\CollectorsCornerJob.cs" />
     <Compile Include="Jobs\eBayJob.cs" />
     <Compile Include="JobScheduler.cs" />
+    <Compile Include="Jobs\PcgsJob.cs" />
     <Compile Include="Jobs\WebJob.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

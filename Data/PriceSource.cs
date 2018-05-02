@@ -39,8 +39,8 @@ namespace JH.PriceScope.Data
         public virtual Grade Grade { get; set; }
         public virtual GradingService GradingService { get; set; }
         public virtual Item Item { get; set; }
+        public virtual Source Source { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemPrice> ItemPrices { get; set; }
-        public virtual Source Source { get; set; }
     }
 }
